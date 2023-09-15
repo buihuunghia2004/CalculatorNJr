@@ -11,22 +11,30 @@ public class Calculator {
         ArrayList<Character> stax=new ArrayList<>();
         ArrayList<Character> numberStax=new ArrayList<>();
 
+        //Handle...
         for (char c:arrCharExpression){
-            if (Character.isDigit(c) || c=='.'){      //ký tự là số
-                numberStax.add(c);          //thêm c vào number stax
-            }else{                          //ký tự là dấu
-                //chuyển number stax thành số và thêm vào queue
+            //1: c is number or '.'
+            if (Character.isDigit(c) || c=='.'){
+                numberStax.add(c);
+
+                //2: c is sign
+            }else{
+                //convert numberstax to number and add to queue
                 if (!numberStax.isEmpty()){
                     queue.add(getNumber(numberStax));
                     numberStax.clear();
                 }
 
-                if (stax.isEmpty()){        //nếu stax rỗng
-                    stax.add(c);            //thêm c vào stack
-                }else{                      //nếu stax ko rỗng
-                    //nếu là dấu (
+                //if stax empty
+                if (stax.isEmpty()){
+                    stax.add(c);
+
+                    //if stax not empty
+                }else{
+                    //if c is '('
                     if (c=='('){
                         stax.add(c);
+                        //if c is ')'
                     }else if (c==')'){
                         for (int i=stax.size()-1;i>=0;i--){
                             if (stax.get(i)=='('){
@@ -37,10 +45,12 @@ public class Calculator {
                                 stax.remove(i);
                             }
                         }
+                        // if c is '+,-,*,/'
                     }else{
-                        for (int i=stax.size()-1;i>=0;i--){         //duyệt stax
+                        for (int i=stax.size()-1;i>=0;i--){
+                            //match '('
                             if (stax.get(i)=='('){
-                                stax.remove(i);
+                                break;
                             }else{
                                 if (getLevelSign(c) >= getLevelSign(stax.get(i))){//nếu dấu có level cao hơn hoặc bằng
                                     //chuyển dấu từ stax vào queue
@@ -58,6 +68,11 @@ public class Calculator {
                 }
             }
         }
+        System.out.println("c");
+        for (Object o:queue){
+            System.out.println(o);
+        }
+        System.out.println("c");
         //cù
         if (!numberStax.isEmpty()){
             queue.add(getNumber(numberStax));
@@ -67,6 +82,12 @@ public class Calculator {
                 queue.add(stax.get(i));
             }
         }
+
+        System.out.println("f");
+        for (Object o:queue){
+            System.out.println(o);
+        }
+        System.out.println("f");
 
         ArrayList arr=new ArrayList<>();
         for (Object o:queue){

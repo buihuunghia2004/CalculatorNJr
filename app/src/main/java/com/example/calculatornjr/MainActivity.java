@@ -199,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }else{
                     binding.edtExpression.append("(");
+                    roundBracketOpenCount++;
                 }
             }
         });
